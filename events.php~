@@ -1,0 +1,90 @@
+<?
+
+$path = preg_replace('/\/www\/(\w+)\/.*/', '/www-data/\1/read-write/', getcwd());
+$data_file = $path . 'events.json';
+
+$all = array();
+/*$all[] = array(
+	       'title' => "test",
+	       'start' => "2013-04-10",//stripslashes($_REQUEST['start']),
+	       'end' => "2013-04-22"//stripslashes($_REQUEST['end'])
+	       );*/
+//echo json_encode($all);
+if($_SERVER['REQUEST_METHOD']=='POST'){
+  $start = date("Y-m-d",$_REQUEST['start']);
+  $end = date("Y-m-d",$_REQUEST['end']);
+  $all[] = array(
+		 'title' => stripslashes($_REQUEST['title']),
+		 'start' => "$start",
+		 'end' => "$end"
+		);
+  echo json_encode($all);
+}
+/*if($_SERVER['REQUEST_METHOD']=='POST'){
+  echo json_encode(array(
+		       
+			 array(
+			       'title' => "test",
+			       'start' => "2013-04-10",//stripslashes($_REQUEST['start']),
+			       'end' => "2013-04-22"//stripslashes($_REQUEST['end'])
+			       )
+			 )
+		   );
+		   }*/
+
+/*
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+  $data = get_data();
+  $event = array(
+		 'action' => stripslashes($_REQUEST['action']),
+		 'title' => stripslashes($_REQUEST['title']),
+		 'start' => stripslashes($_REQUEST['start']),
+		 'end' => stripslashes($_REQUEST['end'])
+		 ); 
+  array_unshift($data, $event);
+  if(file_put_contents($data_file, json_encode($data), LOCK_EX)) {
+    json(array('result' => 'success', 'data' => $data));
+  } 
+  else {
+    json(array('result' => 'error', 'message' => 'Unable to save file'));
+  }
+
+
+}
+
+
+else if($_SERVER['REQUEST_METHOD'] == 'GET'){
+  $data = get_data();
+  $event = array(
+		 'id' => stripslashes($_REQUEST['id']),
+		 'title' => stripslashes($_REQUEST['title']),
+		 'start' => stripslashes($_REQUEST['start']),
+		 'end' => stripslashes($_REQUEST['end'])
+		 );
+  if(file_put_contents($data_file, json_encode($data), LOCK_EX)) {
+    json(array('result' => 'success', 'data' => $data));
+    
+  }
+  else {
+    json(array('result' => 'error', 'message' => 'Unable to save file'));
+  }
+
+  //json(array('result' => 'success', 'data' => get_data()));
+}
+
+
+function get_data() {
+  global $data_file;
+  $data = json_decode(file_get_contents($data_file), true);
+  return $data == NULL ? array() : $data;
+}
+
+
+function json($data) {
+  header('Content-type: application/json; charset=utf-8');
+  header('Pragma: no-cache');
+  header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+  print json_encode($data);
+}
+*/
+?>
